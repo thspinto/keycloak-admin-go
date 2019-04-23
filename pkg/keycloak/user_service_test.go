@@ -1,7 +1,6 @@
 package keycloak
 
 import (
-	"context"
 	"fmt"
 	"net/url"
 	"path"
@@ -50,7 +49,7 @@ func (suite *userServiceTests) TestUserServiceCreateUser() {
 
 	httpmock.RegisterResponder("POST", suite.baseURL, responder)
 
-	id, err := suite.client.Users().Create(context.TODO(), &UserRepresentation{
+	id, err := suite.client.Users().Create(&UserRepresentation{
 		Username: "me",
 	})
 	suite.NoError(err)
@@ -63,7 +62,7 @@ func (suite *userServiceTests) TestUserServiceCreateUserFailure() {
 
 	httpmock.RegisterResponder("POST", suite.baseURL, responder)
 
-	_, err := suite.client.Users().Create(context.TODO(), &UserRepresentation{
+	_, err := suite.client.Users().Create(&UserRepresentation{
 		Username: "me",
 	})
 	suite.NotNil(err)
@@ -84,7 +83,7 @@ func (suite *userServiceTests) TestUserServiceUpdateUser() {
 	fmt.Println(path.Join(suite.baseURL, "abc"))
 	httpmock.RegisterResponder("PUT", path.Join(suite.baseURL, "abc"), responder)
 
-	err := suite.client.Users().Update(context.TODO(), &UserRepresentation{
+	err := suite.client.Users().Update(&UserRepresentation{
 		Username: "me",
 		ID:       "abc",
 	})

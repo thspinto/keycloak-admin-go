@@ -1,7 +1,6 @@
 package keycloak
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -15,7 +14,7 @@ const testRelam = "test-realm"
 func ExampleNewClient() {
 	u, _ := url.Parse("http://localhost/auth/admin")
 	c := NewClient(*u, http.DefaultClient, testRelam)
-	userID, _ := c.Users().Create(context.Background(), &UserRepresentation{
+	userID, _ := c.Users().Create(&UserRepresentation{
 		Username: "hello-world",
 	})
 	fmt.Println("UserID: ", userID)
