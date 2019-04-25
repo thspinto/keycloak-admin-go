@@ -63,6 +63,10 @@ func (t UnixTime) String() string {
 	return time.Time(t).String()
 }
 
+type service struct {
+	client *Client //nolint:structcheck
+}
+
 // MultivaluedHashMap multivalued map
 // easyjson:json
 type MultivaluedHashMap struct {

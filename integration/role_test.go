@@ -1,12 +1,12 @@
 package integration_test
 
 import (
-	"github.com/thspinto/keycloak-admin-go/pkg/keycloak"
+	"github.com/thspinto/keycloak-admin-go/keycloakadm"
 )
 
 func (suite *integrationTester) TestRolesCreate() {
 
-	role := &keycloak.RoleRepresentation{
+	role := &keycloakadm.RoleRepresentation{
 		Name: pseudoRandString(),
 	}
 
@@ -18,7 +18,7 @@ func (suite *integrationTester) TestRolesCreate() {
 
 func (suite *integrationTester) TestGetComposites() {
 
-	role := &keycloak.RoleRepresentation{
+	role := &keycloakadm.RoleRepresentation{
 		Name: "admin",
 	}
 
@@ -31,7 +31,7 @@ func (suite *integrationTester) TestGetComposites() {
 func (suite *integrationTester) TestModifyComposites() {
 
 	// Create a new realm
-	role := &keycloak.RoleRepresentation{
+	role := &keycloakadm.RoleRepresentation{
 		Name: pseudoRandString(),
 	}
 	_, err := suite.client.Roles().Create(suite.ctx, role)
@@ -39,7 +39,7 @@ func (suite *integrationTester) TestModifyComposites() {
 
 	roleToAdd, err := suite.client.Roles().Get(suite.ctx, "admin")
 	suite.NoError(err, suite.version)
-	composites := []keycloak.RoleRepresentation{*roleToAdd}
+	composites := []keycloakadm.RoleRepresentation{*roleToAdd}
 
 	err = suite.client.Roles().AddComposite(suite.ctx, role, composites)
 	suite.NoError(err, suite.version)
