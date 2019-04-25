@@ -1,7 +1,7 @@
 package integration_test
 
 import (
-	"github.com/thspinto/keycloak-admin-go/pkg/keycloak"
+	"github.com/thspinto/keycloak-admin-go/keycloakadm"
 )
 
 func (suite *integrationTester) TestUserFetch() {
@@ -24,7 +24,7 @@ func (suite *integrationTester) TestUserFetch() {
 
 func (suite *integrationTester) TestUserCreate() {
 
-	user := &keycloak.UserRepresentation{
+	user := &keycloakadm.UserRepresentation{
 		Username: pseudoRandString(),
 		Email:    pseudoRandString() + "@example.com",
 	}

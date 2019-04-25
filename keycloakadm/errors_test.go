@@ -1,4 +1,4 @@
-package keycloak
+package keycloakadm
 
 import (
 	"testing"

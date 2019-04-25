@@ -1,12 +1,12 @@
 package integration_test
 
 import (
-	"github.com/thspinto/keycloak-admin-go/pkg/keycloak"
+	"github.com/thspinto/keycloak-admin-go/keycloakadm"
 )
 
 func (suite *integrationTester) TestClientCreate() {
 
-	client := &keycloak.ClientRepresentation{
+	client := &keycloakadm.ClientRepresentation{
 		ClientID: pseudoRandString(),
 	}
 

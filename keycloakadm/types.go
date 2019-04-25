@@ -26,7 +26,7 @@
 //go:generate gomodifytags -file $GOFILE -struct UserSessionRepresentation -add-options json=omitempty -add-tags json -w -transform camelcase
 //go:generate gomodifytags -file $GOFILE -struct GroupRepresentation -add-options json=omitempty -add-tags json -w -transform camelcase
 
-package keycloak
+package keycloakadm
 
 import (
 	"net/url"
@@ -61,6 +61,10 @@ func (t *UnixTime) UnmarshalJSON(s []byte) error {
 
 func (t UnixTime) String() string {
 	return time.Time(t).String()
+}
+
+type service struct {
+	client *Client //nolint:structcheck
 }
 
 // MultivaluedHashMap multivalued map

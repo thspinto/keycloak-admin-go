@@ -1,4 +1,4 @@
-package keycloak
+package keycloakadm
 
 import (
 	"context"
@@ -19,13 +19,13 @@ type userServiceTests struct {
 }
 
 func (suite *userServiceTests) SetupSuite() {
-	baseUserURL, err := url.Parse(fmt.Sprintf("http://keycloak.local/realms/%s/users", testRelam))
+	baseUserURL, err := url.Parse(fmt.Sprintf("http://keycloakadmlocal/realms/%s/users", testRelam))
 	suite.NoError(err)
 	c := &Client{
 		Server: url.URL{
 			Scheme: "https",
 			Path:   "",
-			Host:   "keycloak.local",
+			Host:   "keycloakadmlocal",
 		},
 		restClient: resty.New().OnAfterResponse(handleResponse),
 		Realm:      testRelam,

@@ -1,7 +1,7 @@
 package integration_test
 
 import (
-	"github.com/thspinto/keycloak-admin-go/pkg/keycloak"
+	"github.com/thspinto/keycloak-admin-go/keycloakadm"
 )
 
 func (suite *integrationTester) TestRealmFetch() {
@@ -15,7 +15,7 @@ func (suite *integrationTester) TestRealmDelete() {
 	realmID := pseudoRandString()
 	realmName := pseudoRandString()
 
-	newRealm := &keycloak.RealmRepresentation{
+	newRealm := &keycloakadm.RealmRepresentation{
 		ID:    realmID,
 		Realm: realmName,
 	}
@@ -31,7 +31,7 @@ func (suite *integrationTester) TestRealmCreate() {
 	realmID := pseudoRandString()
 	realmName := pseudoRandString()
 	t := func() *bool { b := true; return &b }()
-	newRealm := &keycloak.RealmRepresentation{
+	newRealm := &keycloakadm.RealmRepresentation{
 		ID:                                  realmID,
 		Realm:                               realmName,
 		AccessCodeLifespan:                  1,

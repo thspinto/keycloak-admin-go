@@ -1,4 +1,4 @@
-package keycloak
+package keycloakadm
 
 import (
 	"context"
@@ -6,10 +6,10 @@ import (
 	"strings"
 )
 
-// ClientsService interacts with all user resources
+// ClientService interacts with all user resources
 type ClientService service
 
-// ClientsS returns a new client service for working with client resources
+// Clients returns a new client service for working with client resources
 // in a realm.
 func (c *Client) Clients() *ClientService {
 	return &ClientService{
