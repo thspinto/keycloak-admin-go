@@ -26,7 +26,7 @@
 //go:generate gomodifytags -file $GOFILE -struct UserSessionRepresentation -add-options json=omitempty -add-tags json -w -transform camelcase
 //go:generate gomodifytags -file $GOFILE -struct GroupRepresentation -add-options json=omitempty -add-tags json -w -transform camelcase
 
-package keycloak
+package keycloakadm
 
 import (
 	"net/url"

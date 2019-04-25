@@ -1,8 +1,8 @@
-// package keycloak contains a client and relevant data structs for interacting
+// package keycloakadm contains a client and relevant data structs for interacting
 // with the Keycloak Admin REST API
 //
-// For mapping, see https://www.keycloak.org/docs-api/4.0/rest-api/index.html
-package keycloak
+// For mapping, see https://www.keycloakadmorg/docs-api/4.0/rest-api/index.html
+package keycloakadm
 
 import (
 	"net/http"
