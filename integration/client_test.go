@@ -30,3 +30,21 @@ func (suite *integrationTester) TestClientFetch() {
 	suite.NoError(err, suite.version)
 	suite.Equal(clientName, client.ClientID, suite.version)
 }
+
+func (suite *integrationTester) TestClientRolesFetch() {
+	clientName := "account"
+	clients, err := suite.client.Clients().Find(suite.ctx, map[string]string{
+		"clientId": clientName,
+	})
+	suite.NotNil(clients, suite.version)
+	suite.NoError(err, suite.version)
+	suite.Len(clients, 1, suite.version)
+
+	roles, err := suite.client.Clients().ListRoles(suite.ctx, &clients[0])
+	suite.Len(roles, 3, suite.version)
+	suite.NoError(err, suite.version)
+	role, err := suite.client.Clients().GetRole(suite.ctx, &clients[0], "manage-account")
+	suite.NotNil(role, suite.version)
+	suite.NoError(err, suite.version)
+	suite.Equal("manage-account", role.Name, suite.version)
+}

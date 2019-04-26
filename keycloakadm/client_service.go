@@ -89,3 +89,48 @@ func (s *ClientService) Find(ctx context.Context, params map[string]string) ([]C
 
 	return clients, nil
 }
+
+// GetRole gets a client role by name
+func (s *ClientService) GetRole(ctx context.Context, client *ClientRepresentation, roleName string) (*RoleRepresentation, error) {
+
+	path := "/realms/{realm}/clients/{id}/roles/{role-name}"
+
+	role := &RoleRepresentation{}
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm":     s.client.Realm,
+			"id":        client.ID,
+			"role-name": roleName,
+		}).
+		SetResult(role).
+		Get(path)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return role, nil
+}
+
+// ListRoles returns all the client roles
+func (s *ClientService) ListRoles(ctx context.Context, client *ClientRepresentation) ([]RoleRepresentation, error) {
+
+	path := "/realms/{realm}/clients/{id}/roles"
+
+	var roles []RoleRepresentation
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm": s.client.Realm,
+			"id":    client.ID,
+		}).
+		SetResult(&roles).
+		Get(path)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return roles, nil
+}
