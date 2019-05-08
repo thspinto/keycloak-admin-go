@@ -345,7 +345,7 @@ type ClientRepresentation struct {
 	Description                        string                         `json:"description,omitempty"`
 	DirectAccessGrantsEnabled          *bool                          `json:"directAccessGrantsEnabled,omitempty"`
 	Enabled                            *bool                          `json:"enabled,omitempty"`
-	FrontChannelLogout                 *bool                          `json:"frontChannelLogout,omitempty"`
+	FrontChannelLogout                 *bool                          `json:"frontchannelLogout,omitempty"`
 	FullScopeAllowed                   *bool                          `json:"fullScopeAllowed,omitempty"`
 	ID                                 string                         `json:"id,omitempty"`
 	ImplicitFlowEnabled                *bool                          `json:"implicitFlowEnabled,omitempty"`
@@ -357,7 +357,7 @@ type ClientRepresentation struct {
 	Protocol                           string                         `json:"protocol,omitempty"`
 	ProtocolMappers                    []ProtocolMapperRepresentation `json:"protocolMappers,omitempty"`
 	PublicClient                       *bool                          `json:"publicClient,omitempty"`
-	RedirectURIs                       []string                       `json:"redirectURIs,omitempty"`
+	RedirectURIs                       []string                       `json:"redirectUris,omitempty"`
 	RegisteredNodes                    AttributeMap                   `json:"registeredNodes,omitempty"`
 	RegistrationAccessToken            string                         `json:"registrationAccessToken,omitempty"`
 	RootURL                            string                         `json:"rootURL,omitempty"`

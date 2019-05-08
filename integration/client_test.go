@@ -31,6 +31,28 @@ func (suite *integrationTester) TestClientFetch() {
 	suite.Equal(clientName, client.ClientID, suite.version)
 }
 
+func (suite *integrationTester) TestClientUpdate() {
+	client := &keycloakadm.ClientRepresentation{
+		ClientID: pseudoRandString(),
+	}
+
+	id, err := suite.client.Clients().Create(suite.ctx, client)
+	suite.NoError(err, suite.version)
+	client, err = suite.client.Clients().Get(suite.ctx, id)
+	suite.NotNil(client, suite.version)
+	suite.NoError(err, suite.version)
+
+	redirectURI := "test"
+	client.RedirectURIs = []string{redirectURI}
+	err = suite.client.Clients().Update(suite.ctx, client)
+	suite.NoError(err, suite.version)
+
+	client, err = suite.client.Clients().Get(suite.ctx, id)
+	suite.NotNil(client, suite.version)
+	suite.NoError(err, suite.version)
+	suite.Equal(redirectURI, client.RedirectURIs[0])
+}
+
 func (suite *integrationTester) TestClientRolesFetch() {
 	clientName := "account"
 	clients, err := suite.client.Clients().Find(suite.ctx, map[string]string{

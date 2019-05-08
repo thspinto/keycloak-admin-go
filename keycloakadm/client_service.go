@@ -66,6 +66,22 @@ func (s *ClientService) Get(ctx context.Context, ID string) (*ClientRepresentati
 	return client, nil
 }
 
+// Update updates the given client
+func (s *ClientService) Update(ctx context.Context, client *ClientRepresentation) error {
+
+	path := "/realms/{realm}/clients/{id}"
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm": s.client.Realm,
+			"id":    client.ID,
+		}).
+		SetBody(client).
+		Put(path)
+
+	return err
+}
+
 // Find returns clients based on query params
 // Params:
 // - clientId
