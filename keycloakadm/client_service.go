@@ -44,6 +44,20 @@ func (s *ClientService) Create(ctx context.Context, client *ClientRepresentation
 	return components[len(components)-1], nil
 }
 
+// Delete deletes a client
+func (s *ClientService) Delete(ctx context.Context, client *ClientRepresentation) error {
+	path := "/realms/{realm}/clients/{id}"
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm": s.client.Realm,
+			"id":    client.ID,
+		}).
+		Delete(path)
+
+	return err
+}
+
 // Get returns a client in a realm
 func (s *ClientService) Get(ctx context.Context, ID string) (*ClientRepresentation, error) {
 
@@ -149,4 +163,70 @@ func (s *ClientService) ListRoles(ctx context.Context, client *ClientRepresentat
 	}
 
 	return roles, nil
+}
+
+// AddProtocolMappers adds protocol mappers
+func (s *ClientService) AddProtocolMappers(ctx context.Context, client *ClientRepresentation, mappers []ProtocolMapperRepresentation) error {
+	path := "/realms/{realm}/clients/{id}/protocol-mappers/add-models"
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm": s.client.Realm,
+			"id":    client.ID,
+		}).
+		SetBody(mappers).
+		Post(path)
+
+	return err
+}
+
+// GetProtocolMappers gets protocol mappers
+func (s *ClientService) GetProtocolMappers(ctx context.Context, client *ClientRepresentation) ([]ProtocolMapperRepresentation, error) {
+	path := "realms/{realm}/clients/{id}/protocol-mappers/models"
+
+	var mappers []ProtocolMapperRepresentation
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm": s.client.Realm,
+			"id":    client.ID,
+		}).
+		SetResult(&mappers).
+		Get(path)
+
+	if err != nil {
+		return nil, err
+	}
+	return mappers, nil
+}
+
+// UpdateProtocolMapper updates a protocol mapper
+func (s *ClientService) UpdateProtocolMapper(ctx context.Context, client *ClientRepresentation, mapper *ProtocolMapperRepresentation) error {
+	path := "realms/{realm}/clients/{id}/protocol-mappers/models/{mapper_id}"
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm":     s.client.Realm,
+			"id":        client.ID,
+			"mapper_id": mapper.ID,
+		}).
+		SetBody(mapper).
+		Put(path)
+
+	return err
+}
+
+// DeleteProtocolMapper deletes a protocol mapper
+func (s *ClientService) DeleteProtocolMapper(ctx context.Context, client *ClientRepresentation, mapper *ProtocolMapperRepresentation) error {
+	path := "realms/{realm}/clients/{id}/protocol-mappers/models/{mapper_id}"
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm":     s.client.Realm,
+			"id":        client.ID,
+			"mapper_id": mapper.ID,
+		}).
+		Delete(path)
+
+	return err
 }
