@@ -120,6 +120,22 @@ func (s *ClientService) Find(ctx context.Context, params map[string]string) ([]C
 	return clients, nil
 }
 
+// CreateRole creates a role
+func (s *ClientService) CreateRole(ctx context.Context, client *ClientRepresentation, role *RoleRepresentation) error {
+
+	path := "/realms/{realm}/clients/{id}/roles"
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm": s.client.Realm,
+			"id":    client.ID,
+		}).
+		SetBody(role).
+		Post(path)
+
+	return err
+}
+
 // GetRole gets a client role by name
 func (s *ClientService) GetRole(ctx context.Context, client *ClientRepresentation, roleName string) (*RoleRepresentation, error) {
 
@@ -141,6 +157,22 @@ func (s *ClientService) GetRole(ctx context.Context, client *ClientRepresentatio
 	}
 
 	return role, nil
+}
+
+// DeleteRole deletes a role
+func (s *ClientService) DeleteRole(ctx context.Context, client *ClientRepresentation, role *RoleRepresentation) error {
+
+	path := "/realms/{realm}/clients/{id}/roles/{role-name}"
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm":     s.client.Realm,
+			"id":        client.ID,
+			"role-name": role.Name,
+		}).
+		Delete(path)
+
+	return err
 }
 
 // ListRoles returns all the client roles
