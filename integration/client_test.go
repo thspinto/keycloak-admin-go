@@ -45,6 +45,50 @@ func (suite *integrationTester) TestClientCreateUpdateDelete() {
 	suite.NoError(err, suite.version)
 }
 
+func (suite *integrationTester) TestClientCreateDeleteRole() {
+	client := &keycloakadm.ClientRepresentation{
+		ClientID: pseudoRandString(),
+	}
+
+	id, err := suite.client.Clients().Create(suite.ctx, client)
+	suite.NotEmpty(id, suite.version)
+	suite.NoError(err, suite.version)
+	client, err = suite.client.Clients().Get(suite.ctx, id)
+	suite.NotNil(client, suite.version)
+	suite.NoError(err, suite.version)
+
+	roleName := "test-role"
+	// Create role
+	err = suite.client.Clients().CreateRole(suite.ctx, client, &keycloakadm.RoleRepresentation{
+		Name: roleName,
+	})
+	suite.NoError(err, suite.version)
+
+	// List  client roles
+	roles, err := suite.client.Clients().ListRoles(suite.ctx, client)
+	suite.NoError(err, suite.version)
+	suite.Len(roles, 1, suite.version)
+
+	// Get created role
+	role, err := suite.client.Clients().GetRole(suite.ctx, client, roleName)
+	suite.NotNil(role, suite.version)
+	suite.NoError(err, suite.version)
+	suite.Equal(roleName, role.Name, suite.version)
+
+	//Delete role
+	err = suite.client.Clients().DeleteRole(suite.ctx, client, role)
+	suite.NoError(err, suite.version)
+
+	// List  client roles
+	roles, err = suite.client.Clients().ListRoles(suite.ctx, client)
+	suite.NoError(err, suite.version)
+	suite.Len(roles, 0, suite.version)
+
+	// Delete client
+	err = suite.client.Clients().Delete(suite.ctx, client)
+	suite.NoError(err, suite.version)
+}
+
 func (suite *integrationTester) TestClientRolesFetch() {
 	clientName := "account"
 	clients, err := suite.client.Clients().Find(suite.ctx, map[string]string{

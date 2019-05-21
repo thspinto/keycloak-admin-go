@@ -11,23 +11,7 @@ func (suite *integrationTester) TestRealmFetch() {
 	suite.Equal(keycloakAdminRealm, realm.ID, suite.version)
 }
 
-func (suite *integrationTester) TestRealmDelete() {
-	realmID := pseudoRandString()
-	realmName := pseudoRandString()
-
-	newRealm := &keycloakadm.RealmRepresentation{
-		ID:    realmID,
-		Realm: realmName,
-	}
-
-	err := suite.client.Realms().Create(suite.ctx, newRealm)
-	suite.NoError(err, suite.version)
-
-	err = suite.client.Realms().Delete(suite.ctx, realmName)
-	suite.NoError(err, suite.version)
-}
-
-func (suite *integrationTester) TestRealmCreate() {
+func (suite *integrationTester) TestRealmCreateDelete() {
 	realmID := pseudoRandString()
 	realmName := pseudoRandString()
 	t := func() *bool { b := true; return &b }()
@@ -71,4 +55,7 @@ func (suite *integrationTester) TestRealmCreate() {
 	suite.Equal(actualRealm.AdminTheme, newRealm.AdminTheme, suite.version)
 	suite.Equal(actualRealm.DisplayName, newRealm.DisplayName, suite.version)
 	suite.Equal(actualRealm.DisplayNameHTML, newRealm.DisplayNameHTML, suite.version)
+
+	err = suite.client.Realms().Delete(suite.ctx, actualRealm.Realm)
+	suite.NoError(err, suite.version)
 }
