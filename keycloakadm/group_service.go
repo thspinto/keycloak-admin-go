@@ -15,6 +15,11 @@ func (c *Client) Groups() *GroupService {
 	}
 }
 
+// Realm returns the reaml the service is operating in
+func (s *GroupService) Realm() string {
+	return s.client.Realm
+}
+
 // Create creates a group in a realm
 func (s *GroupService) Create(ctx context.Context, groupName string) error {
 

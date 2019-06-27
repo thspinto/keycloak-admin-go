@@ -17,6 +17,11 @@ func (c *Client) Users() *UserService {
 	}
 }
 
+// Realm returns the reaml the service is operating in
+func (s *UserService) Realm() string {
+	return s.client.Realm
+}
+
 // Find returns users based on query params
 // Params:
 // - email
