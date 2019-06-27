@@ -85,6 +85,28 @@ func (s *ClientService) Get(ctx context.Context, ID string) (*ClientRepresentati
 	return client, nil
 }
 
+// GetServiceAccountUser returns the service account user associated with the client
+func (s *ClientService) GetServiceAccountUser(ctx context.Context, ID string) (*UserRepresentation, error) {
+
+	path := "/realms/{realm}/clients/{id}/service-account-user"
+
+	user := &UserRepresentation{}
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm": s.client.Realm,
+			"id":    ID,
+		}).
+		SetResult(user).
+		Get(path)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
 // Update updates the given client
 func (s *ClientService) Update(ctx context.Context, client *ClientRepresentation) error {
 

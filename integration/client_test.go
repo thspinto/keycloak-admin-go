@@ -165,3 +165,35 @@ func (suite *integrationTester) TestProtocolMapper() {
 	err = suite.client.Clients().Delete(suite.ctx, client)
 	suite.NoError(err, suite.version)
 }
+
+func (suite *integrationTester) TestClientServiceAccountUserFetch() {
+	trueBool := true
+	client := &keycloakadm.ClientRepresentation{
+		ClientID:               pseudoRandString(),
+		ServiceAccountsEnabled: &trueBool,
+	}
+
+	id, err := suite.client.Clients().Create(suite.ctx, client)
+	suite.NotEmpty(id, suite.version)
+	suite.NoError(err, suite.version)
+	client, err = suite.client.Clients().Get(suite.ctx, id)
+	suite.NotNil(client, suite.version)
+	suite.NoError(err, suite.version)
+
+	redirectURI := "test"
+	client.RedirectURIs = []string{redirectURI}
+	err = suite.client.Clients().Update(suite.ctx, client)
+	suite.NoError(err, suite.version)
+
+	client, err = suite.client.Clients().Get(suite.ctx, id)
+	suite.NotNil(client, suite.version)
+	suite.NoError(err, suite.version)
+	suite.Equal(redirectURI, client.RedirectURIs[0])
+
+	user, err := suite.client.Clients().GetServiceAccountUser(suite.ctx, client.ID)
+	suite.NotNil(user, suite.version)
+	suite.NoError(err, suite.version)
+
+	err = suite.client.Clients().Delete(suite.ctx, client)
+	suite.NoError(err, suite.version)
+}
