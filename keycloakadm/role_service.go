@@ -17,6 +17,11 @@ func (c *Client) Roles() *RoleService {
 	}
 }
 
+// Realm returns the reaml the service is operating in
+func (s *RoleService) Realm() string {
+	return s.client.Realm
+}
+
 // Create creates a new role in realm
 func (s *RoleService) Create(ctx context.Context, role *RoleRepresentation) (string, error) {
 

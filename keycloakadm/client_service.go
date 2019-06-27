@@ -17,6 +17,11 @@ func (c *Client) Clients() *ClientService {
 	}
 }
 
+// Realm returns the reaml the service is operating in
+func (s *ClientService) Realm() string {
+	return s.client.Realm
+}
+
 // Create creates a new client and returns the ID
 // Response is a 201 with a location redirect
 func (s *ClientService) Create(ctx context.Context, client *ClientRepresentation) (string, error) {
