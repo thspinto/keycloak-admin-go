@@ -335,7 +335,7 @@ type ClientRepresentation struct {
 	AuthenticationFlowBindingOverrides AttributeMap                   `json:"authenticationFlowBindingOverrides,omitempty"`
 	AuthorizationServicesEnabled       *bool                          `json:"authorizationServicesEnabled,omitempty"`
 	AuthorizationSettings              *ResourceServerRepresentation  `json:"authorizationSettings,omitempty"`
-	BaseURL                            string                         `json:"baseURL,omitempty"`
+	BaseURL                            string                         `json:"baseUrl,omitempty"`
 	BearerOnly                         *bool                          `json:"bearerOnly,omitempty"`
 	ClientAuthenticatorType            string                         `json:"clientAuthenticatorType,omitempty"`
 	ClientID                           string                         `json:"clientId,omitempty"`
@@ -360,7 +360,7 @@ type ClientRepresentation struct {
 	RedirectURIs                       []string                       `json:"redirectUris,omitempty"`
 	RegisteredNodes                    AttributeMap                   `json:"registeredNodes,omitempty"`
 	RegistrationAccessToken            string                         `json:"registrationAccessToken,omitempty"`
-	RootURL                            string                         `json:"rootURL,omitempty"`
+	RootURL                            string                         `json:"rootUrl,omitempty"`
 	Secret                             string                         `json:"secret,omitempty"`
 	ServiceAccountsEnabled             *bool                          `json:"serviceAccountsEnabled,omitempty"`
 	StandardFlowEnabled                *bool                          `json:"standardFlowEnabled,omitempty"`
