@@ -143,14 +143,14 @@ func (s *UserService) Update(ctx context.Context, user *UserRepresentation) erro
 
 // Delete user information
 // Response is a 204: No Content
-func (s *UserService) Delete(ctx context.Context, userID string) error {
+func (s *UserService) Delete(ctx context.Context, user *UserRepresentation) error {
 
 	path := "/realms/{realm}/users/{id}"
 
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm": s.client.Realm,
-			"id":    userID,
+			"id":    user.ID,
 		}).
 		Delete(path)
 
@@ -158,7 +158,7 @@ func (s *UserService) Delete(ctx context.Context, userID string) error {
 }
 
 // Impersonate user
-func (s *UserService) Impersonate(ctx context.Context, userID string) (AttributeMap, error) {
+func (s *UserService) Impersonate(ctx context.Context, user *UserRepresentation) (AttributeMap, error) {
 
 	path := "/realms/{realm}/users/{id}/impersonation"
 
@@ -167,7 +167,7 @@ func (s *UserService) Impersonate(ctx context.Context, userID string) (Attribute
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm": s.client.Realm,
-			"id":    userID,
+			"id":    user.ID,
 		}).
 		SetResult(&a).
 		Post(path)
@@ -193,7 +193,7 @@ func (s *UserService) Count(ctx context.Context, realm string) (uint32, error) {
 }
 
 // GetGroups gets the groups a realm user belongs to
-func (s *UserService) GetGroups(ctx context.Context, userID string) ([]GroupRepresentation, error) {
+func (s *UserService) GetGroups(ctx context.Context, user *UserRepresentation) ([]GroupRepresentation, error) {
 
 	path := "/realms/{realm}/users/{id}/groups"
 
@@ -202,7 +202,7 @@ func (s *UserService) GetGroups(ctx context.Context, userID string) ([]GroupRepr
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm": s.client.Realm,
-			"id":    userID,
+			"id":    user.ID,
 		}).
 		SetResult(&groups).
 		Get(path)
@@ -211,7 +211,7 @@ func (s *UserService) GetGroups(ctx context.Context, userID string) ([]GroupRepr
 }
 
 // GetConsents gets consents granted by the user
-func (s *UserService) GetConsents(ctx context.Context, userID string) (AttributeMap, error) {
+func (s *UserService) GetConsents(ctx context.Context, user *UserRepresentation) (AttributeMap, error) {
 
 	path := "/realms/{realm}/users/{id}/consents"
 
@@ -220,7 +220,7 @@ func (s *UserService) GetConsents(ctx context.Context, userID string) (Attribute
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm": s.client.Realm,
-			"id":    userID,
+			"id":    user.ID,
 		}).
 		SetResult(&consents).
 		Get(path)
@@ -229,14 +229,14 @@ func (s *UserService) GetConsents(ctx context.Context, userID string) (Attribute
 }
 
 // RevokeClientConsents revokes consent and offline tokens for particular client from user
-func (s *UserService) RevokeClientConsents(ctx context.Context, userID string, clientID string) error {
+func (s *UserService) RevokeClientConsents(ctx context.Context, user *UserRepresentation, clientID string) error {
 
 	path := "/realms/{realm}/users/{id}/consents/{client}"
 
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm":  s.client.Realm,
-			"id":     userID,
+			"id":     user.ID,
 			"client": clientID,
 		}).
 		Delete(path)
@@ -245,14 +245,14 @@ func (s *UserService) RevokeClientConsents(ctx context.Context, userID string, c
 }
 
 // DisableCredentials disables credentials of certain types for a user
-func (s *UserService) DisableCredentials(ctx context.Context, userID string, credentialTypes []string) error {
+func (s *UserService) DisableCredentials(ctx context.Context, user *UserRepresentation, credentialTypes []string) error {
 
 	path := "/realms/{realm}/users/{id}/disable-credential-types"
 
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm": s.client.Realm,
-			"id":    userID,
+			"id":    user.ID,
 		}).
 		Put(path)
 
@@ -260,14 +260,14 @@ func (s *UserService) DisableCredentials(ctx context.Context, userID string, cre
 }
 
 // AddGroup adds a user to a group
-func (s *UserService) AddGroup(ctx context.Context, userID string, groupID string) error {
+func (s *UserService) AddGroup(ctx context.Context, user *UserRepresentation, groupID string) error {
 
 	path := "/realms/{realm}/users/{id}/groups/{groupId}"
 
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm":   s.client.Realm,
-			"id":      userID,
+			"id":      user.ID,
 			"groupId": groupID,
 		}).
 		Put(path)
@@ -276,14 +276,14 @@ func (s *UserService) AddGroup(ctx context.Context, userID string, groupID strin
 }
 
 // RemoveGroup removes a user from a group
-func (s *UserService) RemoveGroup(ctx context.Context, userID string, groupID string) error {
+func (s *UserService) RemoveGroup(ctx context.Context, user *UserRepresentation, groupID string) error {
 
 	path := "/realms/{realm}/users/{id}/groups/{groupId}"
 
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm":   s.client.Realm,
-			"id":      userID,
+			"id":      user.ID,
 			"groupId": groupID,
 		}).
 		Delete(path)
@@ -292,14 +292,14 @@ func (s *UserService) RemoveGroup(ctx context.Context, userID string, groupID st
 }
 
 // Logout revokes all user sessions
-func (s *UserService) Logout(ctx context.Context, userID string) error {
+func (s *UserService) Logout(ctx context.Context, user *UserRepresentation) error {
 
 	path := "/realms/{realm}/users/{id}/logout"
 
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm": s.client.Realm,
-			"id":    userID,
+			"id":    user.ID,
 		}).
 		Post(path)
 
@@ -307,7 +307,7 @@ func (s *UserService) Logout(ctx context.Context, userID string) error {
 }
 
 // GetSessions for user
-func (s *UserService) GetSessions(ctx context.Context, userID string) ([]UserSessionRepresentation, error) {
+func (s *UserService) GetSessions(ctx context.Context, user *UserRepresentation) ([]UserSessionRepresentation, error) {
 
 	path := "/realms/{realm}/users/{id}/sessions"
 
@@ -316,7 +316,7 @@ func (s *UserService) GetSessions(ctx context.Context, userID string) ([]UserSes
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm": s.client.Realm,
-			"id":    userID,
+			"id":    user.ID,
 		}).
 		SetResult(&sessions).
 		Get(path)
@@ -325,7 +325,7 @@ func (s *UserService) GetSessions(ctx context.Context, userID string) ([]UserSes
 }
 
 // GetOfflineSessions for particular client and user
-func (s *UserService) GetOfflineSessions(ctx context.Context, userID string, clientID string) ([]UserSessionRepresentation, error) {
+func (s *UserService) GetOfflineSessions(ctx context.Context, user *UserRepresentation, clientID string) ([]UserSessionRepresentation, error) {
 
 	path := "/realms/{realm}/users/{id}/offline-sessions/{clientId}"
 
@@ -334,7 +334,7 @@ func (s *UserService) GetOfflineSessions(ctx context.Context, userID string, cli
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm":  s.client.Realm,
-			"id":     userID,
+			"id":     user.ID,
 			"client": clientID,
 		}).
 		SetResult(&sessions).
@@ -344,14 +344,14 @@ func (s *UserService) GetOfflineSessions(ctx context.Context, userID string, cli
 }
 
 // ResetPassword for user
-func (s *UserService) ResetPassword(ctx context.Context, userID string, tempPassword *CredentialRepresentation) error {
+func (s *UserService) ResetPassword(ctx context.Context, user *UserRepresentation, tempPassword *CredentialRepresentation) error {
 
 	path := "/realms/{realm}/users/{id}/reset-password"
 
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm": s.client.Realm,
-			"id":    userID,
+			"id":    user.ID,
 		}).
 		SetBody(tempPassword).
 		Put(path)
@@ -359,17 +359,57 @@ func (s *UserService) ResetPassword(ctx context.Context, userID string, tempPass
 	return err
 }
 
-// AddRole adds a role to a user in a realm
-func (s *UserService) AddRole(ctx context.Context, userID string, role RoleRepresentation) error {
+// ListRealmRoles lists the realm roles associated with the user
+func (s *UserService) ListRealmRoles(ctx context.Context, user *UserRepresentation) ([]RoleRepresentation, error) {
+	path := "/realms/{realm}/users/{id}/role-mappings/realm/composite"
 
-	path := "/realms/{realm}/users/{id}/role-mappings/realm"
-	roles := &[]RoleRepresentation{role}
+	var roles []RoleRepresentation
 
 	_, err := s.client.newRequest(ctx).
 		SetPathParams(map[string]string{
 			"realm": s.client.Realm,
-			"id":    userID,
+			"id":    user.ID,
 		}).
+		SetResult(&roles).
+		Get(path)
+
+	return roles, err
+}
+
+// ListClientRoles lists the client roles associated with the user
+func (s *UserService) ListClientRoles(ctx context.Context, user *UserRepresentation, client *ClientRepresentation) ([]RoleRepresentation, error) {
+	path := "/realms/{realm}/users/{id}/role-mappings/clients/{clientId}/composite"
+
+	var roles []RoleRepresentation
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(map[string]string{
+			"realm":    s.client.Realm,
+			"id":       user.ID,
+			"clientId": client.ID,
+		}).
+		SetResult(&roles).
+		Get(path)
+
+	return roles, err
+}
+
+// AddRole adds a role to a user in a realm
+func (s *UserService) AddRole(ctx context.Context, user *UserRepresentation, role RoleRepresentation) error {
+	path := "/realms/{realm}/users/{id}/role-mappings/realm"
+	pathParams := map[string]string{
+		"realm": s.client.Realm,
+		"id":    user.ID,
+	}
+	if *role.ClientRole {
+		path = "/realms/{realm}/users/{id}/role-mappings/clients/{client_id}"
+		pathParams["client_id"] = role.ContainerID
+	}
+
+	roles := &[]RoleRepresentation{role}
+
+	_, err := s.client.newRequest(ctx).
+		SetPathParams(pathParams).
 		SetBody(roles).
 		Post(path)
 
@@ -377,15 +417,20 @@ func (s *UserService) AddRole(ctx context.Context, userID string, role RoleRepre
 }
 
 // DeleteRole deletes a role from a user in a realm
-func (s *UserService) DeleteRole(ctx context.Context, userID string, role RoleRepresentation) error {
+func (s *UserService) DeleteRole(ctx context.Context, user *UserRepresentation, role RoleRepresentation) error {
 	path := "/realms/{realm}/users/{id}/role-mappings/realm"
+	pathParams := map[string]string{
+		"realm": s.client.Realm,
+		"id":    user.ID,
+	}
+	if *role.ClientRole {
+		path = "/realms/{realm}/users/{id}/role-mappings/clients/{client_id}"
+		pathParams["client_id"] = role.ContainerID
+	}
 	roles := &[]RoleRepresentation{role}
 
 	_, err := s.client.newRequest(ctx).
-		SetPathParams(map[string]string{
-			"realm": s.client.Realm,
-			"id":    userID,
-		}).
+		SetPathParams(pathParams).
 		SetBody(roles).
 		Delete(path)
 
