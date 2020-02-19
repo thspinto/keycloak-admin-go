@@ -5,6 +5,7 @@
 [![coverage report](https://gitlab.com/thspinto/keycloak-admin-go/badges/master/coverage.svg)](https://gitlab.com/thspinto/keycloak-admin-go/commits/master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/thspinto/keycloak-admin-go)](https://goreportcard.com/report/github.com/thspinto/keycloak-admin-go)
 [![CircleCI](https://circleci.com/gh/thspinto/keycloak-admin-go.svg?style=svg)](https://circleci.com/gh/thspinto/keycloak-admin-go)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fthspinto%2Fkeycloak-admin-go.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fthspinto%2Fkeycloak-admin-go?ref=badge_shield)
 
 Keycloak admin client in go.
 
@@ -99,3 +100,7 @@ Action   | Status
 - https://gopkg.in/resty.v1: quick and dirty REST client
 - https://godoc.org/golang.org/x/oauth2: for the shamelessly copied authentication
 - https://github.com/fatih/gomodifytags: because I'm too lazy to type json struct tags
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fthspinto%2Fkeycloak-admin-go.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fthspinto%2Fkeycloak-admin-go?ref=badge_large)
