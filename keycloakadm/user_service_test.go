@@ -7,8 +7,8 @@ import (
 	"path"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/suite"
-	"gopkg.in/jarcoal/httpmock.v1"
 	"gopkg.in/resty.v1"
 )
 
